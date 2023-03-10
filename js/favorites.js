@@ -22,9 +22,10 @@ export default class Favorites {
     try {
       const userExist = this.data.find( data => userName == data.login)
       if (userExist) throw new Error('Usuário já cadastrado!')
-      if (!userName) throw new Error('Usuário não encontrado!')
-
+      
       const user = await Favorites.fetchData(userName)
+      if (user.login === undefined) throw new Error('Usuário não encontrado!')
+
       this.data = [user, ...this.data]
       this.save()
       this.updateRows()
